@@ -18,13 +18,16 @@ module Bio
       private
 
       def system_cache_dir
+        if ENV["XDG_CACHE_HOME"]
+          return ENV["XDG_CACHE_HOME"]
+        end
         case RUBY_PLATFORM
         when /mswin/, /mingw/
           ENV["LOCALAPPDATA"] || "~/AppData/Local"
         when /darwin/
           "~/Library/Caches"
         else
-          ENV["XDG_CACHE_HOME"] || "~/.cache"
+          "~/.cache"
         end
       end
     end
